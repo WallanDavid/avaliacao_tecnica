@@ -1,0 +1,61 @@
+Parte 1: Loja de Jogos
+1. Arquitetura Clean Architecture com Atomic Design:
+
+Defina os módulos principais: core, shared, features e presentation.
+No core, você terá os serviços e interfaces que lidam com a lógica de negócio e comunicação com endpoints.
+No shared, adicione componentes comuns como botões e cards de jogos (Atoms).
+No features, crie módulos para as páginas, como a página principal com a vitrine dos jogos (Page) e a página de cadastro de jogos.
+No presentation, crie os componentes que utilizam TailwindCSS para layout e estilo.
+2. Vitrine de Jogos:
+
+Componentes:
+Page: A página principal que exibe os jogos.
+Organisms: Uma lista de jogos.
+Molecules: Cada item de jogo com nome, preço, imagem, etc.
+Atoms: Botões, textos, e imagens individuais.
+Use RxJS para manipulação de estados assíncronos e chamadas ao endpoint mockado.
+Use NgRx para gerenciar o estado global dos jogos cadastrados.
+3. Cadastro de Jogos:
+
+Crie um formulário para cadastrar nome, preço, descrição, dimensões e a imagem de capa dos jogos.
+Envie os dados para o endpoint mockado.
+Parte 2: Algoritmo de Embalagem
+1. Entrada:
+
+Receba os dados dos produtos e das caixas disponíveis.
+Exemplo de dados dos produtos:
+json
+Copiar código
+[
+    { "altura": 10, "largura": 15, "comprimento": 30 },
+    { "altura": 20, "largura": 10, "comprimento": 20 }
+]
+2. Cálculo de Volume e Ajuste de Caixas:
+
+Calcule o volume total de todos os produtos.
+Verifique qual caixa tem dimensões maiores que os produtos individuais ou o volume total.
+3. Algoritmo:
+
+Percorra as caixas disponíveis e escolha a menor que comporta o volume dos produtos.
+Se os produtos não couberem em uma única caixa, distribua entre as caixas.
+4. Exemplo de Código em JS para Escolher a Caixa:
+
+javascript
+Copiar código
+function escolherCaixa(produtos, caixas) {
+    const volumeProdutos = produtos.reduce((acc, p) => acc + (p.altura * p.largura * p.comprimento), 0);
+    
+    let caixaEscolhida = null;
+    caixas.forEach(caixa => {
+        const volumeCaixa = caixa.altura * caixa.largura * caixa.comprimento;
+        if (volumeCaixa >= volumeProdutos) {
+            if (!caixaEscolhida || volumeCaixa < (caixaEscolhida.altura * caixaEscolhida.largura * caixaEscolhida.comprimento)) {
+                caixaEscolhida = caixa;
+            }
+        }
+    });
+    return caixaEscolhida;
+}
+5. Teste com os Exemplo de Entradas:
+
+Teste o algoritmo com os exemplos dados para garantir que ele escolhe corretamente a menor caixa possível.
